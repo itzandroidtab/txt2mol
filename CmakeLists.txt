@@ -6,10 +6,14 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
 
 # c++/c flags
-set(CXX_FLAGS "-std=c++17")
-set(C_FLAGS "-std=c11")
+set(CXX_FLAGS "-std=c++17 --enable-stdcall-fixup")
+set(C_FLAGS "-std=c11 --enable-stdcall-fixup")
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(PUBLIC ./dll)
+include_directories(PUBLIC ./)
+
+link_libraries(mpc05ls.dll)
+link_directories(./dll/)
 
 add_executable(text_to_mol main.cpp)
