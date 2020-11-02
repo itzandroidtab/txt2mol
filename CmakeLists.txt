@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.7)
+
+project(text_to_mol)
+
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_VERSION 1)
+
+# c++/c flags
+set(CXX_FLAGS "-std=c++17")
+set(C_FLAGS "-std=c11")
+set(CMAKE_CXX_STANDARD 17)
+
+include_directories(PUBLIC ./dll)
+
+add_executable(text_to_mol main.cpp)
