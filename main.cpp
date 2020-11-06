@@ -95,7 +95,8 @@ int main(int argc, char ** argv) {
         M05_del_file(r);
     }
 
-    // upload the file
+    // upload the file 
+    // TODO: see if it is oke to use the .TXT extention
     M05_download_work_file(argv[1]);
 
     // close the link
