@@ -17,20 +17,8 @@ int file_exists(std::string filename) {
         return -1;
     }
 
-    // search for the extention dot
-    auto found = filename.find_last_of(".");
-
-    // check if we can strip the extention
-    if (found != std::string::npos) {
-        // strip the extention
-        filename = filename.substr(0, found);
-    }
-
-    // add the .mol extention
-    filename += ".MOL";
-
     long unsigned int file_len;
-    uint8_t local_file[16] = {};
+    uint8_t local_file[64] = {};
 
     // check if a file with the name already exists
     for (size_t i = 0; i < file_id; i++) {
@@ -69,22 +57,56 @@ int main(int argc, char ** argv) {
 
     // get the filename without any path or extention
     std::string filepath = argv[1];
-    // remove everything before the /
-    std::size_t found = filepath.find_last_of("/\\");
 
-    // get the filename from the filepath
-    std::string filename = (found != std::string::npos) ? filepath.substr(found + 1) : filepath;
+    // compile if we are getting called with a txt file
+    if (filepath.find(".TXT") != std::string::npos) {
+        // create a copy of the filepath
+        auto *c = strdup(filepath.c_str());
+
+        // compile the file. This writes to the same folder with a .MOL extention
+        (void) M05_compile_work_file(argv[1]);
+
+        // free the char array memory
+        free(c);
+    }
+
+    // search for the extention dot
+    auto found = filepath.find_last_of(".");
+
+    // check if we can strip the extention
+    if (found != std::string::npos) {
+        // strip the extention
+        filepath = filepath.substr(0, found);
+    }
+
+    // add the .mol extention
+    filepath += ".MOL";
+
+    // check if we have a filename specified
+    auto f = filepath.find_last_of("/\\");
+
+    std::string filename = "";
+
+    // check what we need to do with the filename and path
+    if (f != std::string::npos) {
+        // get the filename from the filepath
+        filename = filepath.substr(f + 1);
+
+        // remove the filename
+        filepath = filepath.substr(f);
+    }
+    else {
+        // set the filename as the filepath if we dont have any \\ or /
+        filename = filepath;
+
+        // clear the filepath
+        filepath = "";
+    }
 
     // change the filename to upper
     for (auto & c: filename) {
         c = toupper(c);
-    }
-
-    // compile if we are getting called with a txt file
-    if (filename.find(".TXT") != std::string::npos) {
-        // compile the file
-        (void) M05_compile_work_file(argv[1]);
-    }
+    }    
 
     // check if the file already exists
     auto r = file_exists(filename);
@@ -95,9 +117,14 @@ int main(int argc, char ** argv) {
         M05_del_file(r);
     }
 
+    // create a copy of the filepath + filename
+    auto *c = strdup((filepath + filename).c_str());
+
     // upload the file 
-    // TODO: see if it is oke to use the .TXT extention
-    M05_download_work_file(argv[1]);
+    M05_download_work_file(c);
+
+    // free the memory
+    free(c);
 
     // close the link
     M05_close_link(1);
