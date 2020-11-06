@@ -93,7 +93,7 @@ int main(int argc, char ** argv) {
         filename = filepath.substr(f + 1);
 
         // remove the filename
-        filepath = filepath.substr(f);
+        filepath = filepath.substr(0, f);
     }
     else {
         // set the filename as the filepath if we dont have any \\ or /
@@ -117,8 +117,8 @@ int main(int argc, char ** argv) {
         M05_del_file(r);
     }
 
-    // create a copy of the filepath + filename
-    auto *c = strdup((filepath + filename).c_str());
+    // create a copy of the filepath + filename (add a \ in between to fix the M05 bug with strange names)
+    auto *c = strdup((filepath + "\\" + filename).c_str());
 
     // upload the file 
     M05_download_work_file(c);
