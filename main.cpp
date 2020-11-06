@@ -67,9 +67,6 @@ int main(int argc, char ** argv) {
         return -1;
     }
 
-    // compile the file
-    int a = M05_compile_work_file(argv[1]);
-
     // get the filename without any path or extention
     std::string filepath = argv[1];
     // remove everything before the /
@@ -81,6 +78,12 @@ int main(int argc, char ** argv) {
     // change the filename to upper
     for (auto & c: filename) {
         c = toupper(c);
+    }
+
+    // compile if we are getting called with a txt file
+    if (filename.find(".TXT") != std::string::npos) {
+        // compile the file
+        (void) M05_compile_work_file(argv[1]);
     }
 
     // check if the file already exists
