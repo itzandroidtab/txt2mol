@@ -6,6 +6,6 @@ This project has the following features:
 
 This project uses the original mpc05ls.dll and CommM05.dll from LaserCut 5.3. To run this project copy these dll files to the build directory.
 
-This program is tested with a Leetro MPC6565. It should work with the other MPC "motion-cards".
+This program is tested with a Leetro MPC6565. It should work with the other MPC65xx "motion-cards".
 
 
