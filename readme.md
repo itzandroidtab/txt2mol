@@ -1,4 +1,4 @@
-# Txt to mul and uploader
+# Txt to mol and uploader
 
 This project has the following features:
 * Upload mol files to the laser machine
