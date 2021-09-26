@@ -125,6 +125,11 @@ namespace mpc {
                 return ret;
             }
 
+            /**
+             * @brief Delete a file with id
+             * 
+             * @param id 
+             */
             void delete_file(int id) {
                 // check if we have a valid id
                 if (id > get_file_amount()) {
@@ -136,6 +141,11 @@ namespace mpc {
                 M05_del_file(id);                
             }
 
+            /**
+             * @brief Upload a local file to the mpu65xx motion card
+             * 
+             * @param file 
+             */
             void upload_file(std::string file) {
                 // create a copy of the file for the m05 func
                 auto *c = strdup(file.c_str());
